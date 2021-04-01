@@ -69,6 +69,14 @@ const taskbookCLI = (input, flags) => {
     return taskbook.clear();
   }
 
+  if (flags.points) {
+    return taskbook.updatePoints(input)
+  }
+  if (flags.join) {
+    taskbook.displayByBoards();
+    return taskbook.displayStats();
+  }
+
   taskbook.displayByBoard();
   return taskbook.displayStats();
 };

@@ -273,6 +273,20 @@ class Taskbook {
     return grouped;
   }
 
+  _groupByBoards(data = this._data) {
+    const grouped = {}
+    Object.keys(data).forEach(id => {
+      const board = data[id].boards.sort().join(' ')
+      if (Array.isArray(grouped[board])) {
+        return grouped[board].push(data[id])
+      }
+      grouped[board] = [data[id]]
+      return grouped[board]
+    });
+
+    return grouped;
+  }
+
   _groupByDate(data = this._data, dates = this._getDates()) {
     const grouped = {};
 
@@ -396,6 +410,10 @@ class Taskbook {
 
   displayByBoard() {
     render.displayByBoard(this._groupByBoard());
+  }
+
+  displayByBoards() {
+    render.displayByBoard(this._groupByBoards());
   }
 
   displayByDate() {
@@ -527,6 +545,35 @@ class Taskbook {
     this._save(_data);
     render.markStarred(starred);
     render.markUnstarred(unstarred);
+  }
+
+  updatePoints(input) {
+    const targets = input.filter(x => x.startsWith('@'));
+    if (targets.length === 0) {
+      render.missingID();
+      process.exit(1);
+    }
+
+    if (targets.length > 1) {
+      render.invalidIDsNumber();
+      process.exit(1);
+    }
+
+    const [target] = targets;
+    const id = this._validateIDs(target.replace('@', ''));
+    const {_data} = this;
+    const points = parseFloat(input.filter(x => x !== target).join(' '));
+    if (isNaN(points)) {
+      render.invalidPoints();
+      process.exit(1);
+    }
+    if (points === 0) {
+      _data[id].points = 0
+    } else {
+      _data[id].points += points;
+    }
+    this._save(_data);
+    render.successPoints(id, _data[id].points);
   }
 
   updatePriority(input) {

@@ -51,7 +51,7 @@
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
-    "xo": "*"
+    "xo": "0.25.4"
   },
   "xo": {
     "space": 2

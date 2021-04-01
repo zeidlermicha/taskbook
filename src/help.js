@@ -19,6 +19,7 @@ module.exports = `
       --move, -m         Move item between boards
       --note, -n         Create note
       --priority, -p     Update priority of task
+      --points, -j       Update points of task
       --restore, -r      Restore items from archive
       --star, -s         Star/unstar item
       --task, -t         Create task
@@ -39,6 +40,7 @@ module.exports = `
       $ tb --move @1 cooking
       $ tb --note @coding Mergesort worse-case O(nlogn)
       $ tb --priority @3 2
+      $ tb --points @1 5
       $ tb --restore 4
       $ tb --star 2
       $ tb --task @coding @reviews Review PR #42

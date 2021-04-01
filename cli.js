@@ -60,6 +60,10 @@ const cli = meow(help, {
       type: 'boolean',
       alias: 'p'
     },
+    points: {
+      type: 'boolean',
+      alias: 'g'
+    },
     find: {
       type: 'boolean',
       alias: 'f'
@@ -78,6 +82,10 @@ const cli = meow(help, {
     },
     clear: {
       type: 'boolean'
+    },
+    join: {
+      type: 'boolean',
+      alias: 'j'
     }
   }
 });

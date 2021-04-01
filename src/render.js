@@ -77,7 +77,7 @@ class Render {
 
     const {isComplete, description} = item;
     const priority = parseInt(item.priority, 10);
-
+    const points = item.points || 0
     if (!isComplete && priority > 1) {
       message.push(underline[priorities[priority]](description));
     } else {
@@ -86,6 +86,9 @@ class Render {
 
     if (!isComplete && priority > 1) {
       message.push(priority === 2 ? yellow('(!)') : red('(!!)'));
+    }
+    if (points > 0){
+      message.push(grey(points))
     }
 
     return message.join(' ');
@@ -211,6 +214,11 @@ class Render {
     const message = 'More than one ids were given as input';
     error({prefix, message});
   }
+  invalidPoints() {
+    const prefix = '\n';
+    const message = 'Could not parse points';
+    error({prefix, message});
+  }
 
   invalidPriority() {
     const prefix = '\n';
@@ -324,6 +332,13 @@ class Render {
     const prefix = '\n';
     const message = `Updated priority of task: ${grey(id)} to`;
     const suffix = level === '3' ? red('high') : (level === '2' ? yellow('medium') : green('normal'));
+    success({prefix, message, suffix});
+  }
+
+  successPoints(id,points){
+    const prefix = '\n';
+    const message = `Updated points of task: ${green(id)} to`;
+    const suffix = grey(points)
     success({prefix, message, suffix});
   }
 
